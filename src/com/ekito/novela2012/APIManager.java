@@ -8,6 +8,9 @@ public class APIManager {
 	
 	private static final String API_URL = "http://novela2012.ekito.fr";
 	
+	private static final String MAP = "/map";
+	private static final String USER_MAP = MAP+"/%s";
+	
 
 	private final Activity mContext;
 	private AsyncHttpClient client;
@@ -93,6 +96,11 @@ public class APIManager {
 	
 	public String getMapURL()
 	{
-		return API_URL;
+		return API_URL+MAP;
+	}
+	
+	public String getUserMapURL(String userId)
+	{
+		return API_URL+String.format(USER_MAP, userId);
 	}
 }
