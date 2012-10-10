@@ -13,11 +13,13 @@ public class APIManager {
 	private static final String MAP = "/map";
 	private static final String USER_MAP = MAP+"/%s";
 	private static final String API_SEND_LOCATION = "/location";
+	private static final String API_CENTER = "/location/center";
 	
 	private static final String LAT = "lat";
 	private static final String LON = "lon";
 	private static final String IS_START = "isStart";
 	private static final String USER_ID = "userId";
+	private static final String ZOOM = "zoom";
 	
 
 	private final Context mContext;
@@ -115,19 +117,35 @@ public class APIManager {
 		return API_URL+String.format(USER_MAP, userId);
 	}
 	
-	public void sendLocation(Double lat2, Double lon2, Boolean isStart, String userId, AsyncHttpResponse response) {
+	public void sendLocation(Double lat, Double lon, Boolean isStart, String userId, AsyncHttpResponse response) {
 		HttpParams params = new HttpParams();
-		params.addParam(LAT, lat2.toString());
-		params.addParam(LON, lon2.toString());
+		params.addParam(LAT, lat.toString());
+		params.addParam(LON, lon.toString());
 		params.addParam(IS_START, isStart.toString());
 		params.addParam(USER_ID, userId.toString());
 
-		Debug.out("Sending data: lat="+lat2.toString()+"\n"+
-				"lon="+lon2.toString()+"\n"+
+		Debug.out("Sending data: lat="+lat.toString()+"\n"+
+				"lon="+lon.toString()+"\n"+
 				"isStart="+isStart.toString()+"\n"+
 				"userId="+userId);
 		
 		client = new AsyncHttpClient();
 		client.post(API_URL + API_SEND_LOCATION, params, params, params, createStandardResponse(response));
+	}
+	
+	public void center(Double lat, Double lon, String userId, Integer zoom, AsyncHttpResponse response) {
+		HttpParams params = new HttpParams();
+		params.addParam(LAT, lat.toString());
+		params.addParam(LON, lon.toString());
+		params.addParam(USER_ID, userId.toString());
+		params.addParam(ZOOM, zoom.toString());
+
+		Debug.out("Center map: lat="+lat.toString()+"\n"+
+				"lon="+lon.toString()+"\n"+
+				"userId="+userId+"\n"+
+				"zoom="+zoom.toString());
+		
+		client = new AsyncHttpClient();
+		client.post(API_URL + API_CENTER, params, params, params, createStandardResponse(response));
 	}
 }
