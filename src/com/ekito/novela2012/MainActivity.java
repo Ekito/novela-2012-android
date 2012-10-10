@@ -2,20 +2,18 @@ package com.ekito.novela2012;
 
 import x.ui.XUIWebView;
 import android.annotation.SuppressLint;
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.widget.Button;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.littlefluffytoys.littlefluffylocationlibrary.LocationInfo;
-import com.littlefluffytoys.littlefluffylocationlibrary.LocationLibraryConstants;
 
 @SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
 public class MainActivity extends SherlockActivity {
@@ -25,21 +23,15 @@ public class MainActivity extends SherlockActivity {
 	private XUIWebView mWebView;
 	private Button mStartStopBtn;
 
-	private String mUserId;
-	private Float mLat;
-	private Float mLon;
-	private Boolean mIsStart; 
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
 		mAPIManager = new APIManager(this);
-		mUserId = User.getId(this);
-		
-		mWebView = (XUIWebView) findViewById(R.id.webview);
+
 		mStartStopBtn = (Button) findViewById(R.id.start_stop);
+		mWebView = (XUIWebView) findViewById(R.id.webview);
 		
 		refreshStartStopBtn();
 		
@@ -64,28 +56,9 @@ public class MainActivity extends SherlockActivity {
 			webSettings.enableSmoothTransition();
 		}
 
-		mWebView.loadUrl(mAPIManager.getUserMapURL(mUserId));
+		String userId = User.getId(this);
+		mWebView.loadUrl(mAPIManager.getUserMapURL(userId));
 	}
-	
-	@Override
-    public void onResume() {
-        super.onResume();
-
-        // cancel any notification we may have received from TestBroadcastReceiver
-        ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(1234);
-
-        // This demonstrates how to dynamically create a receiver to listen to the location updates.
-        // You could also register a receiver in your manifest.
-        final IntentFilter lftIntentFilter = new IntentFilter(LocationLibraryConstants.LOCATION_CHANGED_PERIODIC_BROADCAST_ACTION);
-        registerReceiver(lftBroadcastReceiver, lftIntentFilter);
-   }
-
-    @Override
-    public void onPause() {
-        super.onResume();
-        
-        unregisterReceiver(lftBroadcastReceiver);
-   }
 	
 	public void centerMap(View target) {
 		// TODO
@@ -94,19 +67,39 @@ public class MainActivity extends SherlockActivity {
 	public void startStopTracking(View target) {
 		MainApplication app = (MainApplication) getApplication();
 		
-		if (app.isTracking())	app.stopTracking();
-		else					app.startTracking();
+		if (app.isTracking()) {
+			app.stopTracking();
+		}
+		else {
+
+			final LocationManager mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+			if ( !mgr.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+		        buildAlertMessageNoGps();
+		    } else {
+		    	app.startTracking();
+		    }
+		}
 		
 		refreshStartStopBtn();
 	}
-	
-	private final BroadcastReceiver lftBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // extract the location info in the broadcast
-            final LocationInfo locationInfo = (LocationInfo) intent.getSerializableExtra(LocationLibraryConstants.LOCATION_BROADCAST_EXTRA_LOCATIONINFO);
-            
-            // TODO send to remote server
-        }
-    };
+
+	private void buildAlertMessageNoGps() {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+		.setCancelable(false)
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+				startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+			}
+		})
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+				dialog.cancel();
+			}
+		});
+		final AlertDialog alert = builder.create();
+		alert.show();
+	}
 }
