@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">Déambulations</string>
+    
+    <string name="menu_about">À propos</string>
+    <string name="menu_center">Centrer</string>
+    <string name="menu_start">Start</string>
+    <string name="menu_stop">Stop</string>
+
+    <string name="local_service_started">Début du dessin&#8230;</string>
+    <string name="local_service_stopped">Dessin terminé</string>
+    <string name="notif_title">Déambulations</string>
+    <string name="notif_text">Dessin en cours</string>
+    
+    <string name="centering">Centrage de la carte&#8230;</string>
+    <string name="centering_success">Vous avez été centré sur votre position</string>
+    <string name="centering_error">Une erreur est survenue pendant le centrage de la carte</string>
+    
+    <string name="gps_unavailable">Le signal GPS est indisponible, souhaitez-vous l\'activer?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    
+</resources>

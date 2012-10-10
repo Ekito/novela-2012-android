@@ -57,7 +57,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		// start stop btn
 		MainApplication app = (MainApplication) getApplication();
 		MenuItem startStopBtn = menu.findItem(R.id.menu_start_stop);
-		startStopBtn.setTitle(app.isTracking()? getString(R.string.stop) : getString(R.string.start));
+		startStopBtn.setTitle(app.isTracking()? getString(R.string.menu_stop) : getString(R.string.menu_start));
 		
 		int icon = app.isTracking()? R.drawable.ic_stop : R.drawable.ic_start;
 		startStopBtn.setIcon(getResources().getDrawable(icon));
@@ -97,12 +97,12 @@ public class MainActivity extends SlidingFragmentActivity {
 					@Override
 					public void onSuccess(Object response) {
 						super.onSuccess(response);
-						Toast.makeText(MainActivity.this, "you've been succesfully centered", Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainActivity.this, getString(R.string.centering_success), Toast.LENGTH_SHORT).show();
 					}
 					@Override
 					public void onFailure(int responseCode, String responseMessage) {
 						super.onFailure();
-						Toast.makeText(MainActivity.this, "an error occured when trying to center the map", Toast.LENGTH_SHORT).show();
+						Toast.makeText(MainActivity.this, getString(R.string.centering_error), Toast.LENGTH_SHORT).show();
 					}
 					@Override
 					public void onFinish() {
@@ -123,7 +123,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		};
 		mLocationer.getLocation(result);
 
-		Toast.makeText(this, "centering...", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.centering), Toast.LENGTH_SHORT).show();
 		mIsCentering = true;
 		invalidateOptionsMenu();
 	}
@@ -149,15 +149,15 @@ public class MainActivity extends SlidingFragmentActivity {
 
 	private void buildAlertMessageNoGps() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+		builder.setMessage(getString(R.string.gps_unavailable))
 		.setCancelable(false)
-		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int id) {
 				startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 			}
 		})
-		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.cancel();

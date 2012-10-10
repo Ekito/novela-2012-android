@@ -1,12 +1,23 @@
 <resources>
 
     <string name="app_name">Perambulations</string>
-    <string name="menu_about">About</string>
     
-    <string name="center">center</string>
-    <string name="start">start</string>
-    <string name="stop">stop</string>
+    <string name="menu_about">About</string>
+    <string name="menu_center">Center</string>
+    <string name="menu_start">Start</string>
+    <string name="menu_stop">Stop</string>
 
-    <string name="local_service_started">Location tracking</string>
+    <string name="local_service_started">Starting drawing&#8230;</string>
+    <string name="local_service_stopped">Drawing stopped</string>
+    <string name="notif_title">Perembulations</string>
+    <string name="notif_text">You are drawing</string>
+    
+    <string name="centering">Centering&#8230;</string>
+    <string name="centering_success">You\'ve been succesfully centered</string>
+    <string name="centering_error">An error occured when trying to center the map</string>
+    
+    <string name="gps_unavailable">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     
 </resources>

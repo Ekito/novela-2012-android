@@ -100,7 +100,7 @@ public class LocationTracker extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Toast.makeText(this, "local service is started ", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.local_service_started), Toast.LENGTH_SHORT).show();
 		Debug.out("=====tracking is started=====");
 		// For each start request, send a message to start a job and deliver the
 		// start ID so we know which request we're stopping when we finish the job
@@ -123,7 +123,7 @@ public class LocationTracker extends Service {
 		mgr.removeUpdates(network_locationer);
 		mgr.removeGpsStatusListener(gpslistener);
 		// Tell the user we stopped.
-		Toast.makeText(this, "local service is stopped", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.local_service_stopped), Toast.LENGTH_SHORT).show();
 		Debug.out("=====tracking is stopped=====");
 	}
 
@@ -138,15 +138,13 @@ public class LocationTracker extends Service {
 	 * Show a notification while this service is running.
 	 */
 	private void showNotification() {
-		// In this sample, we'll use the same text for the ticker and the expanded notification
-		CharSequence text = getText(R.string.local_service_started);
 		// The PendingIntent to launch our activity if the user selects this notification
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				new Intent(this, MainActivity.class), 0);
 
 		builder = new NotificationCompat.Builder(getBaseContext())
-		.setContentTitle("You are being tracked...")
-		.setContentText(text)
+		.setContentTitle(getString(R.string.notif_title))
+		.setContentText(getString(R.string.notif_text))
 		.setSmallIcon(R.drawable.ic_launcher)
 		.setContentIntent(contentIntent)
 		.setOngoing(true);
