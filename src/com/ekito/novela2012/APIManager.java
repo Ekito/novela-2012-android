@@ -12,6 +12,7 @@ public class APIManager {
 	
 	private static final String MAP = "/map";
 	private static final String USER_MAP = MAP+"/%s";
+	private static final String ABOUT = "/about/mobile?lang=%s";
 	private static final String API_SEND_LOCATION = "/location";
 	private static final String API_CENTER = "/location/center";
 	
@@ -115,6 +116,10 @@ public class APIManager {
 	public String getUserMapURL(String userId)
 	{
 		return API_URL+String.format(USER_MAP, userId);
+	}
+
+	public String getAboutURL(String language) {
+		return API_URL+String.format(ABOUT, language);
 	}
 	
 	public void sendLocation(Double lat, Double lon, Boolean isStart, String userId, AsyncHttpResponse response) {

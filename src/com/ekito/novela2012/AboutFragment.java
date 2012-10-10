@@ -1,8 +1,9 @@
 package com.ekito.novela2012;
 
+import java.util.Locale;
+
 import x.ui.XUIWebView;
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.webkit.WebSettings;
 import com.actionbarsherlock.app.SherlockFragment;
 
 @SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
-public class MainFragment extends SherlockFragment {
+public class AboutFragment extends SherlockFragment {
 
 	private APIManager mAPIManager;
 	
@@ -21,7 +22,7 @@ public class MainFragment extends SherlockFragment {
 	@Override 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View v = inflater.inflate(R.layout.frag_main, container);
+		View v = inflater.inflate(R.layout.frag_about, container);
 		mWebView = (XUIWebView) v.findViewById(R.id.webview);
 		return v;
 	}
@@ -40,11 +41,10 @@ public class MainFragment extends SherlockFragment {
 		WebSettings webSettings = mWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 
-		if (Build.VERSION.SDK_INT >= 11) {
-			webSettings.enableSmoothTransition();
-		}
+		mWebView.setVerticalScrollBarEnabled(true);
 
-		String userId = User.getId(getSherlockActivity());
-		mWebView.loadUrl(mAPIManager.getUserMapURL(userId));
+
+		String language = Locale.getDefault().getLanguage();
+		mWebView.loadUrl(mAPIManager.getAboutURL(language));
 	}
 }

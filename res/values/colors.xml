@@ -1,0 +1,12 @@
+
+    <resources>
+        
+        <color name="white">#FFFFFF</color>
+        <color name="gray">#989898</color>
+        
+		<!-- Button -->
+		<item name="btn_bg" type="color">#FFFFFF</item>	
+		<item name="btn_bg_pressed" type="color">#EEEEEE</item>	
+		<item name="btn_bg_focused" type="color">#EEEEEE</item>	
+		<item name="btn_text" type="color">#989898</item>
+    </resources>

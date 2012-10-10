@@ -1,3 +1,10 @@
 <resources>
-
+	<style name="Theme.Default" parent="Theme.Sherlock.Light">
+	    <item name="actionBarStyle">@style/Widget.Default.ActionBar</item>
+    	<item name="android:actionBarStyle">@style/Widget.Default.ActionBar</item>
+    </style>
+    <style name="Widget.Default.ActionBar" parent="Widget.Sherlock.ActionBar">
+	    <item name="android:background">@drawable/actionbar_bg</item>
+	    <item name="background">@drawable/actionbar_bg</item>
+	</style>
 </resources>
