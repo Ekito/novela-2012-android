@@ -130,7 +130,7 @@ public class APIManager {
 				"userId="+userId);
 		
 		client = new AsyncHttpClient();
-		client.post(API_URL + API_SEND_LOCATION, params, params, params, createStandardResponse(response));
+		client.post(API_URL + API_SEND_LOCATION, new HttpParams(), params, null, createStandardResponse(response));
 	}
 	
 	public void center(Double lat, Double lon, String userId, Integer zoom, AsyncHttpResponse response) {
@@ -146,6 +146,6 @@ public class APIManager {
 				"zoom="+zoom.toString());
 		
 		client = new AsyncHttpClient();
-		client.post(API_URL + API_CENTER, params, params, params, createStandardResponse(response));
+		client.post(API_URL + API_CENTER, new HttpParams(), params, null, createStandardResponse(response));
 	}
 }

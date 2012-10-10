@@ -1,10 +1,12 @@
 package com.ekito.novela2012;
 
+import x.lib.Debug;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 
 public class MainApplication extends Application {
 
@@ -14,6 +16,9 @@ public class MainApplication extends Application {
     @Override
 	public void onCreate(){
         super.onCreate();
+        
+        Boolean isDebuggable = (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE));		
+        Debug.setDebugMode(isDebuggable);
     }
 
 	public Boolean isTracking() {
