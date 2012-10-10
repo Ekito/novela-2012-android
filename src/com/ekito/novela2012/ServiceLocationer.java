@@ -7,14 +7,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 
-class Locationer implements LocationListener {
+class ServiceLocationer implements LocationListener {
 
 	private final APIManager mAPIManager;
 	private final Context mContext;
 
 	private Location mPrevLoc;
 
-	public Locationer(Context context) {
+	public ServiceLocationer(Context context) {
 		mAPIManager = new APIManager(context);
 		mContext = context;
 		mPrevLoc = null;
@@ -39,7 +39,6 @@ class Locationer implements LocationListener {
 
 		final Double lat = loc.getLatitude();
 		final Double lon = loc.getLongitude();
-		final Float accuracy = loc.getAccuracy();
 		final Long time = loc.getTime();
 
 		if (mPrevLoc != null) {

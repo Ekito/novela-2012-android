@@ -32,7 +32,7 @@ public class LocationTracker extends Service {
 	private final int NOTIFICATION = R.string.local_service_started;
 	private long last_time;
 	private LocationManager mgr;
-	private Locationer gps_locationer, network_locationer;
+	private ServiceLocationer gps_locationer, network_locationer;
 	private NotificationCompat.Builder builder;
 	private gpsStatusListener gpslistener;
 
@@ -48,8 +48,8 @@ public class LocationTracker extends Service {
 			
 			mgr = (LocationManager) getSystemService(LOCATION_SERVICE);  
 			
-			gps_locationer = new Locationer(LocationTracker.this);
-			network_locationer = new Locationer(LocationTracker.this);
+			gps_locationer = new ServiceLocationer(LocationTracker.this);
+			network_locationer = new ServiceLocationer(LocationTracker.this);
 
 			//gpslistener = new gpsStatusListener();
 			//mgr.addGpsStatusListener(gpslistener);
